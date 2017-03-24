@@ -8,14 +8,13 @@
         android:id="@+id/left_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/robot"
-            android:id="@+id/imageView" />
+            android:src="@mipmap/robot" />
 
         <TextView
             android:id="@+id/left_msg"
@@ -24,6 +23,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:background="@drawable/left"
+            android:gravity="center_vertical"
             android:textColor="#fff"
             android:textSize="15dp" />
     </LinearLayout>
@@ -33,8 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:orientation="horizontal"
-       >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/right_msg"
@@ -42,12 +41,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:textColor="#fff"
+            android:layout_weight="1"
             android:background="@drawable/right"
+            android:gravity="center_vertical"
+            android:textColor="#fff"
             android:textSize="15dp" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0"
             android:src="@mipmap/me" />
     </LinearLayout>
 

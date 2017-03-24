@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,13 +75,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         if (msgInfo.getChatObj() == MsgInfo.TYPE_ROBOT) {
             holder.leftLayout.setVisibility(View.VISIBLE);
             holder.rightLayout.setVisibility(View.GONE);
-//            holder.left_msg.setText(Html.fromHtml(msgInfo.getChatInfo(), imgGetter, null));
-            holder.left_msg.setText(msgInfo.getChatInfo());
+            holder.left_msg.setText(Html.fromHtml(msgInfo.getChatInfo(), imgGetter, null));
+            holder.left_msg.setMovementMethod(LinkMovementMethod.getInstance());
+//            holder.left_msg.setMovementMethod(ScrollingMovementMethod.getInstance());
+//            holder.left_msg.setText(msgInfo.getChatInfo());
         } else {
             holder.leftLayout.setVisibility(View.GONE);
             holder.rightLayout.setVisibility(View.VISIBLE);
             holder.right_msg.setText(Html.fromHtml(msgInfo.getChatInfo(), imgGetter, null));
-            holder.left_msg.setText(msgInfo.getChatInfo());
+            holder.right_msg.setMovementMethod(LinkMovementMethod.getInstance());
+//            holder.left_msg.setText(msgInfo.getChatInfo());
         }
     }
 
