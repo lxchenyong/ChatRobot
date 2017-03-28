@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">RobotSmailHelper</string>
+    <string name="app_name">趣逗</string>
     <string name="action_settings">Settings</string>
     <string name="clear_cache">清除缓存</string>
     <string name="explain">说明</string>
     <string name="send">发送</string>
+    <string name="speak">开始 说话</string>
 </resources>

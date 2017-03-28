@@ -15,9 +15,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.jeff.robotsmailhelper.R;
 import com.jeff.robotsmailhelper.interfacecontract.IChatContract;
 import com.jeff.robotsmailhelper.model.bean.MsgInfo;
@@ -38,6 +41,9 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
     private RecyclerView swipeRefreshRecyclerView;
     private ChatAdapter mChatAdapter;
     private EditText mEditText;
+    private Button mbtSpeak;
+    private ImageView mImageView;
+    private Button mbtSend;
     private ChatPresenter presenter;
     private long mExitTime = 0;
     private List<MsgInfo> msgInfoList = new ArrayList<>();
@@ -47,6 +53,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
     private int screenHeight = 0;
     //软件盘弹起后所占高度阀值
     private int keyHeight = 0;
+    private boolean isSpeak = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,8 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
 //        presenter.loadData("");
         msgInfoList.add(new MsgInfo("您好，我是邻家小妹妹很高心为你服务", MsgInfo.TYPE_ROBOT));
         initView();
-
+        // 初始化识别对象
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=58d9d824");
         //获取屏幕高度
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
         //阀值设置为屏幕高度的1/3
@@ -78,7 +86,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
         activityRootView = (RelativeLayout) findViewById(R.id.content_main);
@@ -97,8 +105,13 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
         mChatAdapter = new ChatAdapter(this, msgInfoList);
         swipeRefreshRecyclerView.setAdapter(mChatAdapter);
         mEditText = (EditText) findViewById(R.id.et_content);
-        Button mbtSend = (Button) findViewById(R.id.bt_send);
+        mbtSend = (Button) findViewById(R.id.bt_send);
+        mImageView = (ImageView) findViewById(R.id.text_switch);
+        mbtSpeak = (Button) findViewById(R.id.bt_speak);
+
         mbtSend.setOnClickListener(this);
+        mbtSpeak.setOnClickListener(this);
+        mImageView.setOnClickListener(this);
     }
 
     @Override
@@ -124,6 +137,18 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
     }
 
     @Override
+    public void showSpeak(String message) {
+        presenter.loadData(message);
+        msgInfoList.add(new MsgInfo(message, MsgInfo.TYPE_USER));
+        mChatAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
     public void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
@@ -145,8 +170,24 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
 
                     mChatAdapter.notifyDataSetChanged();
                 }
-
-
+                break;
+            case R.id.text_switch:
+                if (isSpeak) {
+                    mbtSpeak.setVisibility(View.VISIBLE);
+                    mbtSend.setVisibility(View.INVISIBLE);
+                    mEditText.setVisibility(View.GONE);
+                    mImageView.setImageResource(R.mipmap.ic_keyboard);
+                    isSpeak = false;
+                } else {
+                    mbtSpeak.setVisibility(View.GONE);
+                    mbtSend.setVisibility(View.VISIBLE);
+                    mEditText.setVisibility(View.VISIBLE);
+                    mImageView.setImageResource(R.mipmap.ic_speaker);
+                    isSpeak = true;
+                }
+                break;
+            case R.id.bt_speak:
+                presenter.initSpeech();
                 break;
         }
     }
@@ -208,6 +249,6 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
             //监听到软件盘关闭
 
         }
-
     }
+
 }

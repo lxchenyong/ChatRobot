@@ -1,8 +1,7 @@
 package com.jeff.robotsmailhelper.interfacecontract;
 
-import com.jeff.robotsmailhelper.model.bean.MsgInfo;
+import android.content.Context;
 
-import java.util.List;
 
 /**
  * 聊天接口类
@@ -11,7 +10,7 @@ import java.util.List;
 
 public interface IChatContract {
 
-    interface IChatView{
+    interface IChatView {
         /**
          * 是否显示加载条
          */
@@ -23,13 +22,31 @@ public interface IChatContract {
         void showData(String data);
 
         /**
+         * 显示说的话内容
+         *
+         * @param message 内容
+         */
+        void showSpeak(String message);
+
+        /**
+         * @return 得到上下文
+         */
+        Context getContext();
+
+        /**
          * 显示Toast
          *
          * @param message 信息
          */
         void showToast(String message);
     }
-    interface IChatPresenter{
+
+    interface IChatPresenter {
         void loadData(String mContent);
+
+        /**
+         * 初始化语音识别
+         */
+        void initSpeech();
     }
 }
