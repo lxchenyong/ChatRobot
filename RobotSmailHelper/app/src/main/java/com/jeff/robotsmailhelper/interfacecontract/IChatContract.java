@@ -52,6 +52,6 @@ public interface IChatContract {
         /**
          * 初始化语音合成
          */
-        void initSpeechCompound();
+        void initSpeechCompound(String data);
     }
 }

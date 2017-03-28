@@ -198,50 +198,51 @@ public class ChatPresenter implements IChatContract.IChatPresenter {
     }
 
     @Override
-    public void initSpeechCompound() {
+    public void initSpeechCompound(String data) {
         SpeechSynthesizer mTts = SpeechSynthesizer.createSynthesizer(mIChatView.getContext(), null);
-        mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaohua");
-        mTts.setParameter(SpeechConstant.SPEED, "50");
-        mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
-//        mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH,"./");
-        mTts.startSpeaking("科大讯飞，让世界聆听我们的声音", mSynListener);
+        mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaohua");//设置发音人
+        mTts.setParameter(SpeechConstant.SPEED, "50");//设置语速
+        mTts.setParameter(SpeechConstant.VOLUME, "50");//设置音量，范围0~100
+        mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);//设置云端
+//        mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH,"./sdcard/iflytek.pcm");//声音保存路径，可以自定义
+        mTts.startSpeaking(data, mSynListener);//开始合成
 
     }
 
     private SynthesizerListener mSynListener = new SynthesizerListener() {
         @Override
         public void onSpeakBegin() {
-
+            //开始播放
         }
 
         @Override
         public void onBufferProgress(int i, int i1, int i2, String s) {
-
+            //缓冲进度回调
         }
 
         @Override
         public void onSpeakPaused() {
-
+            //暂停播放
         }
 
         @Override
         public void onSpeakResumed() {
-
+            //恢复播放回调接口
         }
 
         @Override
         public void onSpeakProgress(int i, int i1, int i2) {
-
+            //播放进度回调
         }
 
         @Override
         public void onCompleted(SpeechError speechError) {
-
+            //会话结束回调接口
         }
 
         @Override
         public void onEvent(int i, int i1, int i2, Bundle bundle) {
-
+            //会话事件回调接口
         }
     };
 

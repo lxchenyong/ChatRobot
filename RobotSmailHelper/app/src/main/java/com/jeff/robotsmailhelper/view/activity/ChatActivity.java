@@ -42,7 +42,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
     private ChatAdapter mChatAdapter;
     private EditText mEditText;
     private Button mbtSpeak;
-    private ImageView mImageView;
+    private ImageView mImageView, ivSpeak;
     private Button mbtSend;
     private ChatPresenter presenter;
     private long mExitTime = 0;
@@ -54,6 +54,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
     //软件盘弹起后所占高度阀值
     private int keyHeight = 0;
     private boolean isSpeak = true;
+    private boolean showSpeak = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,11 +108,13 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
         mEditText = (EditText) findViewById(R.id.et_content);
         mbtSend = (Button) findViewById(R.id.bt_send);
         mImageView = (ImageView) findViewById(R.id.text_switch);
+        ivSpeak = (ImageView) findViewById(R.id.iv_speak);
         mbtSpeak = (Button) findViewById(R.id.bt_speak);
 
         mbtSend.setOnClickListener(this);
         mbtSpeak.setOnClickListener(this);
         mImageView.setOnClickListener(this);
+        ivSpeak.setOnClickListener(this);
     }
 
     @Override
@@ -134,6 +137,10 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
         msgInfoList.add(new MsgInfo(data, MsgInfo.TYPE_ROBOT));
         mChatAdapter.notifyDataSetChanged();
         swipeRefreshRecyclerView.smoothScrollToPosition(msgInfoList.size());
+        if (showSpeak){
+            presenter.initSpeechCompound(data);
+        }
+
     }
 
     @Override
@@ -141,7 +148,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
         presenter.loadData(message);
         msgInfoList.add(new MsgInfo(message, MsgInfo.TYPE_USER));
         mChatAdapter.notifyDataSetChanged();
-        presenter.initSpeechCompound();
+
     }
 
     @Override
@@ -190,6 +197,14 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
             case R.id.bt_speak:
                 presenter.initSpeech();
                 break;
+            case R.id.iv_speak:
+                if (showSpeak){
+                    showSpeak= false;
+                    ivSpeak.setImageResource(R.mipmap.ic_notifications_off_black);
+                } else{
+                    showSpeak = true;
+                    ivSpeak.setImageResource(R.mipmap.ic_notifications_none_black);
+                }
         }
     }
 
