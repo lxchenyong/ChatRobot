@@ -39,7 +39,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
-            android:gravity="bottom"
             android:layout_weight="1"
             android:padding="15dp"
             android:visibility="visible" />
@@ -50,6 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/speak"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
             android:layout_gravity="center"
             android:textSize="18sp"
             android:visibility="gone" />

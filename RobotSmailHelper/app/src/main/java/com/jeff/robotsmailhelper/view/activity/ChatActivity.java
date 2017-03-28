@@ -174,7 +174,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
             case R.id.text_switch:
                 if (isSpeak) {
                     mbtSpeak.setVisibility(View.VISIBLE);
-                    mbtSend.setVisibility(View.INVISIBLE);
+                    mbtSend.setVisibility(View.GONE);
                     mEditText.setVisibility(View.GONE);
                     mImageView.setImageResource(R.mipmap.ic_keyboard);
                     isSpeak = false;
