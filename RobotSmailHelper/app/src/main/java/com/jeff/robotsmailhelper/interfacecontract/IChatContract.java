@@ -45,8 +45,13 @@ public interface IChatContract {
         void loadData(String mContent);
 
         /**
-         * 初始化语音识别
+         * 初始化语音识别听写
          */
         void initSpeech();
+
+        /**
+         * 初始化语音合成
+         */
+        void initSpeechCompound();
     }
 }

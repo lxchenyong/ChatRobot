@@ -1,12 +1,15 @@
 package com.jeff.robotsmailhelper.presenter;
 
 
+import android.os.Bundle;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechSynthesizer;
+import com.iflytek.cloud.SynthesizerListener;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.jeff.robotsmailhelper.interfacecontract.IChatContract;
@@ -193,6 +196,54 @@ public class ChatPresenter implements IChatContract.IChatPresenter {
         //显示讯飞语音识别视图
         recognizerDialog.show();
     }
+
+    @Override
+    public void initSpeechCompound() {
+        SpeechSynthesizer mTts = SpeechSynthesizer.createSynthesizer(mIChatView.getContext(), null);
+        mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaohua");
+        mTts.setParameter(SpeechConstant.SPEED, "50");
+        mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
+//        mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH,"./");
+        mTts.startSpeaking("科大讯飞，让世界聆听我们的声音", mSynListener);
+
+    }
+
+    private SynthesizerListener mSynListener = new SynthesizerListener() {
+        @Override
+        public void onSpeakBegin() {
+
+        }
+
+        @Override
+        public void onBufferProgress(int i, int i1, int i2, String s) {
+
+        }
+
+        @Override
+        public void onSpeakPaused() {
+
+        }
+
+        @Override
+        public void onSpeakResumed() {
+
+        }
+
+        @Override
+        public void onSpeakProgress(int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onCompleted(SpeechError speechError) {
+
+        }
+
+        @Override
+        public void onEvent(int i, int i1, int i2, Bundle bundle) {
+
+        }
+    };
 
     /**
      * 解析语音json

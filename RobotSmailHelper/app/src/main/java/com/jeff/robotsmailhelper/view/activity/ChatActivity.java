@@ -141,6 +141,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
         presenter.loadData(message);
         msgInfoList.add(new MsgInfo(message, MsgInfo.TYPE_USER));
         mChatAdapter.notifyDataSetChanged();
+        presenter.initSpeechCompound();
     }
 
     @Override
