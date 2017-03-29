@@ -157,7 +157,9 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
     @Override
     public void showSpeak(String message) {
         presenter.loadData(message);
-        msgInfoList.add(new MsgInfo(message, MsgInfo.TYPE_USER));
+        MsgInfo msgInfo = new MsgInfo(message, MsgInfo.TYPE_USER);
+        msgInfo.save();
+        msgInfoList.add(msgInfo);
         mChatAdapter.notifyDataSetChanged();
 
     }
