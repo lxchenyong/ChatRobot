@@ -75,13 +75,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         if (msgInfo.getChatObj() == MsgInfo.TYPE_ROBOT) {
             holder.leftLayout.setVisibility(View.VISIBLE);
             holder.rightLayout.setVisibility(View.GONE);
+            holder.tv_Error.setVisibility(View.GONE);
             holder.left_msg.setText(Html.fromHtml(msgInfo.getChatInfo(), imgGetter, null));
             holder.left_msg.setMovementMethod(LinkMovementMethod.getInstance());
 //            holder.left_msg.setMovementMethod(ScrollingMovementMethod.getInstance());
 //            holder.left_msg.setText(msgInfo.getChatInfo());
-        } else {
+        } else if(msgInfo.getChatObj() == MsgInfo.TYPE_ERROR){
+            holder.leftLayout.setVisibility(View.GONE);
+            holder.rightLayout.setVisibility(View.GONE);
+            holder.tv_Error.setVisibility(View.VISIBLE);
+            holder.tv_Error.setText(msgInfo.getChatInfo());
+        } else{
             holder.leftLayout.setVisibility(View.GONE);
             holder.rightLayout.setVisibility(View.VISIBLE);
+            holder.tv_Error.setVisibility(View.GONE);
             holder.right_msg.setText(Html.fromHtml(msgInfo.getChatInfo(), imgGetter, null));
             holder.right_msg.setMovementMethod(LinkMovementMethod.getInstance());
 //            holder.left_msg.setText(msgInfo.getChatInfo());
@@ -99,6 +106,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         LinearLayout rightLayout;
         TextView left_msg;
         TextView right_msg;
+        TextView tv_Error;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -106,6 +114,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             rightLayout = (LinearLayout) itemView.findViewById(R.id.right_layout);
             left_msg = (TextView) itemView.findViewById(R.id.left_msg);
             right_msg = (TextView) itemView.findViewById(R.id.right_msg);
+            tv_Error = (TextView) itemView.findViewById(R.id.tv_error);
         }
     }
 }

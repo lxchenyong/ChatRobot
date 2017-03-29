@@ -39,6 +39,8 @@ public interface IChatContract {
          * @param message 信息
          */
         void showToast(String message);
+
+        void failurePrompt(String message);
     }
 
     interface IChatPresenter {

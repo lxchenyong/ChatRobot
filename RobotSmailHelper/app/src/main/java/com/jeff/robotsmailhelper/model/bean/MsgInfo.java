@@ -10,6 +10,7 @@ import org.litepal.crud.DataSupport;
 public class MsgInfo extends DataSupport {
     public static final int TYPE_ROBOT = 0;
     public static final int TYPE_USER  = 1;
+    public static final int TYPE_ERROR = 2;
 
     private String chatInfo;
     private int chatObj;

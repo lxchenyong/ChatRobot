@@ -32,7 +32,7 @@ public class ChatPresenter implements IChatContract.IChatPresenter {
 
     private IChatContract.IChatView mIChatView;
     private ChatBiz mChatBiz;
-    private String data = null;
+    private String data ;
 
     public ChatPresenter(IChatContract.IChatView mIChatView, ChatBiz mChatBiz) {
         this.mIChatView = mIChatView;
@@ -47,6 +47,7 @@ public class ChatPresenter implements IChatContract.IChatPresenter {
                 public void loadSucceed(Object response) throws JSONException {
                     JSONObject jsonObject = new JSONObject(response.toString());
                     String code = String.valueOf(jsonObject.getString("code"));
+                    data = null;
                     switch (code) {
                         case "100000":
                             //文本类数据
@@ -126,38 +127,50 @@ public class ChatPresenter implements IChatContract.IChatPresenter {
                         case "40001":
                             //key的长度错误（32位）
                             mIChatView.showToast("（系统）key的长度错误（32位）");
+                            mIChatView.failurePrompt("（系统）key的长度错误（32位）");
                             break;
                         case "40002":
                             //请求内容为空
-                            mIChatView.showToast("（系统）请求内容为空");
+                            mIChatView.failurePrompt("（系统）服务器升级中");
+                            mIChatView.showToast("（系统）服务器升级中");
                             break;
                         case "40003":
                             //key错误或帐号未激活
                             mIChatView.showToast("（系统）key错误或帐号未激活");
+                            mIChatView.failurePrompt("（系统）key错误或帐号未激活");
                             break;
                         case "40004":
                             //当天请求次数已用完
                             mIChatView.showToast("（系统）当天请求次数已用完");
+                            mIChatView.failurePrompt("（系统）当天请求次数已用完");
                             break;
                         case "40005":
                             //暂不支持该功能
                             mIChatView.showToast("（系统）暂不支持该功能");
+                            mIChatView.failurePrompt("（系统）服务暂不支持该功能升级中");
                             break;
                         case "40006":
                             //服务器升级中
                             mIChatView.showToast("（系统）服务器升级中");
+                            mIChatView.failurePrompt("（系统）服务器升级中");
                             break;
                         case "40007":
                             //服务器数据格式异常
                             mIChatView.showToast("（系统）服务器数据格式异常");
+                            mIChatView.failurePrompt("（系统）服务器数据格式异常");
                             break;
                     }
-                    mIChatView.showData(data);
+                    assert data != null;
+                    if (!data.isEmpty()){
+                        mIChatView.showData(data);
+                    }
+
                 }
 
                 @Override
                 public void loadFailed(String message) {
                     mIChatView.showToast(message);
+                    mIChatView.failurePrompt("服务器连接失败");
                 }
             });
         } catch (UnsupportedEncodingException e) {
