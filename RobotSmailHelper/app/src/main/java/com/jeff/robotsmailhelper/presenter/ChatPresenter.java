@@ -14,6 +14,7 @@ import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.jeff.robotsmailhelper.interfacecontract.IChatContract;
 import com.jeff.robotsmailhelper.listener.VolleyLoaderListener;
+import com.jeff.robotsmailhelper.model.bean.MsgInfo;
 import com.jeff.robotsmailhelper.model.biz.ChatBiz;
 
 import org.json.JSONArray;
@@ -163,7 +164,7 @@ public class ChatPresenter implements IChatContract.IChatPresenter {
                     assert data != null;
                     if (!data.isEmpty()){
                         mIChatView.showData(data);
-                    }
+                }
 
                 }
 

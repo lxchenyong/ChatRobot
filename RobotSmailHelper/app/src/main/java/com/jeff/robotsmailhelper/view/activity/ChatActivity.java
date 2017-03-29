@@ -27,18 +27,19 @@ import com.jeff.robotsmailhelper.model.bean.MsgInfo;
 import com.jeff.robotsmailhelper.model.biz.ChatBiz;
 import com.jeff.robotsmailhelper.presenter.ChatPresenter;
 import com.jeff.robotsmailhelper.view.adapter.ChatAdapter;
-import com.mylhyl.crlayout.SwipeRefreshAdapterView;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ChatActivity extends AppCompatActivity implements IChatContract.IChatView,
-        SwipeRefreshLayout.OnRefreshListener, SwipeRefreshAdapterView.OnListLoadListener,
+        SwipeRefreshLayout.OnRefreshListener,
         View.OnClickListener, View.OnLayoutChangeListener {
 
-    //    private SwipeRefreshRecyclerView swipeRefreshRecyclerView;
-    private RecyclerView swipeRefreshRecyclerView;
+    private SwipeRefreshLayout swipeRefresh;
+    private RecyclerView mRecyclerView;
     private ChatAdapter mChatAdapter;
     private EditText mEditText;
     private Button mbtSpeak;
@@ -55,15 +56,25 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
     private int keyHeight = 0;
     private boolean isSpeak = true;
     private boolean showSpeak = true;
+    private int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        for (int i = DataSupport.order("id desc").limit(10).find(MsgInfo.class).size() - 1; i >= 0; i--) {
+            msgInfoList.add(DataSupport.order("id desc").limit(10).find(MsgInfo.class).get(i));
+        }
         presenter = new ChatPresenter(this, new ChatBiz());
-//        presenter.loadData("");
-        msgInfoList.add(new MsgInfo("您好，我是邻家小妹妹很高心为你服务", MsgInfo.TYPE_ROBOT));
+        if (msgInfoList.isEmpty()) {
+            MsgInfo msgInfo = new MsgInfo("您好，我是邻家小妹妹很高心为你服务", MsgInfo.TYPE_ROBOT);
+            msgInfoList.add(msgInfo);
+            msgInfo.save();
+        }
         initView();
+        if (!msgInfoList.isEmpty()){
+            mRecyclerView.smoothScrollToPosition(msgInfoList.size());
+        }
         // 初始化识别对象
         SpeechUtility.createUtility(this, SpeechConstant.APPID + "=58d9d824");
         //获取屏幕高度
@@ -91,20 +102,15 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
         actionBar.setDisplayShowHomeEnabled(true);
 
         activityRootView = (RelativeLayout) findViewById(R.id.content_main);
-//        swipeRefreshRecyclerView = (SwipeRefreshRecyclerView) findViewById(R.id.recycler_view);
-        swipeRefreshRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-//        swipeRefreshRecyclerView.autoRefresh(R.color.primary_color,
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+//        swipeRefresh.autoRefresh(R.color.primary_color,
 //                R.color.colorAccent, R.color.primary);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        swipeRefreshRecyclerView.setLayoutManager(layoutManager);
-//        swipeRefreshRecyclerView.setRefreshing(false);
-//        swipeRefreshRecyclerView.setLoading(false);
-        swipeRefreshRecyclerView.setEnabled(false);
-//        swipeRefreshRecyclerView.setEnabledLoad(false);
-//        swipeRefreshRecyclerView.setOnRefreshListener(this);
-//        swipeRefreshRecyclerView.setOnListLoadListener(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+        swipeRefresh.setOnRefreshListener(this);
         mChatAdapter = new ChatAdapter(this, msgInfoList);
-        swipeRefreshRecyclerView.setAdapter(mChatAdapter);
+        mRecyclerView.setAdapter(mChatAdapter);
         mEditText = (EditText) findViewById(R.id.et_content);
         mbtSend = (Button) findViewById(R.id.bt_send);
         mImageView = (ImageView) findViewById(R.id.text_switch);
@@ -119,12 +125,15 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
 
     @Override
     public void onRefresh() {
-
-    }
-
-    @Override
-    public void onListLoad() {
-
+        index++;
+        for (int i = 0; i < DataSupport.order("id desc").limit(10).offset(10*index).find(MsgInfo.class).size(); i++) {
+            msgInfoList.add(0, DataSupport.order("id desc").limit(10).offset(10*index).find(MsgInfo.class).get(i));
+        }
+        if (DataSupport.order("id desc").limit(10).offset(10*index).find(MsgInfo.class).isEmpty()){
+            showToast("数据已全部加载完成");
+        }
+        swipeRefresh.setRefreshing(false);
+        mChatAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -134,10 +143,12 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
 
     @Override
     public void showData(String data) {
-        msgInfoList.add(new MsgInfo(data, MsgInfo.TYPE_ROBOT));
+        MsgInfo msgInfo = new MsgInfo(data, MsgInfo.TYPE_ROBOT);
+        msgInfo.save();
+        msgInfoList.add(msgInfo);
         mChatAdapter.notifyDataSetChanged();
-        swipeRefreshRecyclerView.smoothScrollToPosition(msgInfoList.size());
-        if (showSpeak){
+        mRecyclerView.smoothScrollToPosition(msgInfoList.size());
+        if (showSpeak) {
             presenter.initSpeechCompound(data);
         }
 
@@ -163,9 +174,11 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
 
     @Override
     public void failurePrompt(String message) {
-        msgInfoList.add(new MsgInfo(message, MsgInfo.TYPE_ERROR));
+        MsgInfo msgInfo = new MsgInfo(message, MsgInfo.TYPE_ERROR);
+        msgInfo.save();
+        msgInfoList.add(msgInfo);
         mChatAdapter.notifyDataSetChanged();
-        swipeRefreshRecyclerView.smoothScrollToPosition(msgInfoList.size());
+        mRecyclerView.smoothScrollToPosition(msgInfoList.size());
     }
 
     @Override
@@ -176,7 +189,9 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
                     showToast("内容不能为空");
                 } else {
                     presenter.loadData(mEditText.getText().toString());
-                    msgInfoList.add(new MsgInfo(mEditText.getText().toString(), MsgInfo.TYPE_USER));
+                    MsgInfo msgInfo = new MsgInfo(mEditText.getText().toString(), MsgInfo.TYPE_USER);
+                    msgInfo.save();
+                    msgInfoList.add(msgInfo);
                     mEditText.setText("");
                     //隐藏键盘
                     InputMethodManager imm = (InputMethodManager)
@@ -205,10 +220,10 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
                 presenter.initSpeech();
                 break;
             case R.id.iv_speak:
-                if (showSpeak){
-                    showSpeak= false;
+                if (showSpeak) {
+                    showSpeak = false;
                     ivSpeak.setImageResource(R.mipmap.ic_notifications_off_black);
-                } else{
+                } else {
                     showSpeak = true;
                     ivSpeak.setImageResource(R.mipmap.ic_notifications_none_black);
                 }
@@ -231,7 +246,9 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.clear_cache) {
-
+            DataSupport.deleteAll(MsgInfo.class);
+            msgInfoList.clear();
+            mChatAdapter.notifyDataSetChanged();
             return true;
         } else if (id == R.id.explain) {
 
@@ -267,7 +284,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
         if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
 
             //监听到软键盘弹起
-            swipeRefreshRecyclerView.smoothScrollToPosition(msgInfoList.size());
+            mRecyclerView.smoothScrollToPosition(msgInfoList.size());
         } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
             //监听到软件盘关闭
 

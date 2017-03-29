@@ -2,6 +2,8 @@ package com.jeff.robotsmailhelper.model.bean;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.Date;
+
 /**
  * 消息类
  * Created by chen_yong on 2017/3/24.
@@ -12,12 +14,13 @@ public class MsgInfo extends DataSupport {
     public static final int TYPE_USER  = 1;
     public static final int TYPE_ERROR = 2;
 
-    private String chatInfo;
-    private int chatObj;
 
-    public MsgInfo(String chatInfo, int chatObj) {
+    private String chatInfo;
+    private int chatType;
+
+    public MsgInfo(String chatInfo, int chatType) {
         this.chatInfo = chatInfo;
-        this.chatObj = chatObj;
+        this.chatType = chatType;
     }
 
     public String getChatInfo() {
@@ -28,11 +31,12 @@ public class MsgInfo extends DataSupport {
         this.chatInfo = chatInfo;
     }
 
-    public int getChatObj() {
-        return chatObj;
+    public int getChatType() {
+        return chatType;
     }
 
-    public void setChatObj(int chatObj) {
-        this.chatObj = chatObj;
+    public void setChatType(int chatType) {
+        this.chatType = chatType;
     }
+
 }

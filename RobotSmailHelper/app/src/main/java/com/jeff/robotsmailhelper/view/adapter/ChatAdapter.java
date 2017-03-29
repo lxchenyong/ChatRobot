@@ -72,7 +72,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 return drawable;
             }
         };
-        if (msgInfo.getChatObj() == MsgInfo.TYPE_ROBOT) {
+        if (msgInfo.getChatType() == MsgInfo.TYPE_ROBOT) {
             holder.leftLayout.setVisibility(View.VISIBLE);
             holder.rightLayout.setVisibility(View.GONE);
             holder.tv_Error.setVisibility(View.GONE);
@@ -80,7 +80,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             holder.left_msg.setMovementMethod(LinkMovementMethod.getInstance());
 //            holder.left_msg.setMovementMethod(ScrollingMovementMethod.getInstance());
 //            holder.left_msg.setText(msgInfo.getChatInfo());
-        } else if(msgInfo.getChatObj() == MsgInfo.TYPE_ERROR){
+        } else if(msgInfo.getChatType() == MsgInfo.TYPE_ERROR){
             holder.leftLayout.setVisibility(View.GONE);
             holder.rightLayout.setVisibility(View.GONE);
             holder.tv_Error.setVisibility(View.VISIBLE);
