@@ -1,4 +1,4 @@
-package com.jeff.robotsmailhelper.view.activity;
+package com.jeff.robotsmailhelper.chat.view.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -22,11 +22,11 @@ import android.widget.Toast;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 import com.jeff.robotsmailhelper.R;
-import com.jeff.robotsmailhelper.interfacecontract.IChatContract;
-import com.jeff.robotsmailhelper.model.bean.MsgInfo;
-import com.jeff.robotsmailhelper.model.biz.ChatBiz;
-import com.jeff.robotsmailhelper.presenter.ChatPresenter;
-import com.jeff.robotsmailhelper.view.adapter.ChatAdapter;
+import com.jeff.robotsmailhelper.chat.interfacecontract.IChatContract;
+import com.jeff.robotsmailhelper.chat.model.bean.MsgInfo;
+import com.jeff.robotsmailhelper.chat.model.biz.ChatBiz;
+import com.jeff.robotsmailhelper.chat.presenter.ChatPresenter;
+import com.jeff.robotsmailhelper.chat.view.adapter.ChatAdapter;
 
 import org.litepal.crud.DataSupport;
 

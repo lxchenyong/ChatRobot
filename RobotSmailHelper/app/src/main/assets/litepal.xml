@@ -3,7 +3,7 @@
     <dbname value="message_sql" />
     <version value="1" />
     <list>
-        <mapping class="com.jeff.robotsmailhelper.model.bean.MsgInfo" />
+        <mapping class="com.jeff.robotsmailhelper.chat.model.bean.MsgInfo" />
     </list>
 
 </litepal>

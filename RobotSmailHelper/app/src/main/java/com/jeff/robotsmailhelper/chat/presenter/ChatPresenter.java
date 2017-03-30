@@ -1,4 +1,4 @@
-package com.jeff.robotsmailhelper.presenter;
+package com.jeff.robotsmailhelper.chat.presenter;
 
 
 import android.os.Bundle;
@@ -12,10 +12,9 @@ import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
-import com.jeff.robotsmailhelper.interfacecontract.IChatContract;
+import com.jeff.robotsmailhelper.chat.interfacecontract.IChatContract;
 import com.jeff.robotsmailhelper.listener.VolleyLoaderListener;
-import com.jeff.robotsmailhelper.model.bean.MsgInfo;
-import com.jeff.robotsmailhelper.model.biz.ChatBiz;
+import com.jeff.robotsmailhelper.chat.model.biz.ChatBiz;
 
 import org.json.JSONArray;
 import org.json.JSONException;

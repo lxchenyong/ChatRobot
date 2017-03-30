@@ -1,4 +1,4 @@
-package com.jeff.robotsmailhelper.view.adapter;
+package com.jeff.robotsmailhelper.chat.view.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeff.robotsmailhelper.R;
-import com.jeff.robotsmailhelper.model.bean.MsgInfo;
+import com.jeff.robotsmailhelper.chat.model.bean.MsgInfo;
 
 import java.net.URL;
 import java.util.List;

@@ -1,8 +1,6 @@
-package com.jeff.robotsmailhelper.model.bean;
+package com.jeff.robotsmailhelper.chat.model.bean;
 
 import org.litepal.crud.DataSupport;
-
-import java.util.Date;
 
 /**
  * 消息类

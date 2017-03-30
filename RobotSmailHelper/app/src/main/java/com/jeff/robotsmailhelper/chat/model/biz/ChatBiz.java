@@ -1,4 +1,4 @@
-package com.jeff.robotsmailhelper.model.biz;
+package com.jeff.robotsmailhelper.chat.model.biz;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
