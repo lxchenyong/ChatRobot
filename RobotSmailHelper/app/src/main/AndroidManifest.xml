@@ -42,6 +42,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".login.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".chat.view.activity.UserGuideActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -2,8 +2,7 @@
     <string name="app_name">趣逗</string>
     <string name="action_settings">Settings</string>
     <string name="clear_cache">清除聊天纪录</string>
-    <string name="trade_skin">换皮肤</string>
-    <string name="explain">说明</string>
+    <string name="user_guide">使用指南</string>
     <string name="send">发送</string>
     <string name="speak">开始 说话</string>
 
@@ -33,4 +32,23 @@
     <string name="tip_please_input_code">请输入验证码</string>
     <string name="tip_please_input_6_32_password">请输入6-32个密码</string>
     <string name="reset_pwd">重置密码</string>
+
+
+    <!-- 用户指南-->
+    <string name="user_guide_title">有哪些功能信息</string>
+    <string name="user_guide_one">可以聊天对话</string>
+    <string name="user_guide_two">可以讲笑话。例如写或说一句“笑话”，机器人就会给你讲个笑话</string>
+    <string name="user_guide_three">可以查询天气。例如写或说一句“上海天气”，机器人就会显示进四天的天气</string>
+    <string name="user_guide_four">可以查询车票。例如写或说一句“上海到北京的火车”，机器人就会显示出来</string>
+    <string name="user_guide_five">可以查询航班。例如写或说一句“上海到北京的飞机”，机器人就会显示出来</string>
+    <string name="user_guide_six">可以查食谱。例如写或说一句“红烧肉”，机器人就会显示红烧肉多种做法</string>
+    <string name="user_guide_seven">可以查新闻。例如写或说一句“新闻”，机器人就会显示比较热门新闻</string>
+    <string name="user_guide_eight">可以脑筋急转弯。例如写或说一句“脑筋急转弯”，机器人就会说一个脑筋急转弯</string>
+    <string name="user_guide_nine">可以说歇后语。例如写或说一句“歇后语”，机器人就会说一个歇后语</string>
+    <string name="user_guide_ten">可以图片搜索。例如写或说一句“图片”，机器人就会显示出来</string>
+    <string name="user_guide_eleven">可以数字计算。例如写或说一句“5的平方”，机器人就会显示出结果</string>
+    <string name="user_guide_twelve">可以查星座运势。例如写或说一句“白羊座运势”，机器人就会显示出来</string>
+    <string name="user_guide_thirteen">可以讲故事。例如写或说一句“故事”，机器人就会讲一个故事</string>
+    <string name="user_guide_fourteen">可以成语接龙。例如写或说一句“成语接龙 苦尽甘来”，机器人就会一串成语</string>
+    <string name="user_guide_fifteen">可以快递查询。例如写或说一句“快递查询 1314520”，机器人就会显示当前单号信息</string>
 </resources>

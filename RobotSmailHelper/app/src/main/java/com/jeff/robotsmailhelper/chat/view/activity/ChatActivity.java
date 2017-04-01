@@ -252,8 +252,8 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
             msgInfoList.clear();
             mChatAdapter.notifyDataSetChanged();
             return true;
-        } else if (id == R.id.explain) {
-
+        } else if (id == R.id.user_guide) {
+            startActivity(UserGuideActivity.createExplicitIntent(this));
             return true;
         }
 

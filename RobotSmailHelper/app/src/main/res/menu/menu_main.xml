@@ -8,14 +8,10 @@
         android:orderInCategory="100"
         android:title="@string/clear_cache"
         app:showAsAction="never" />
+
     <item
-        android:id="@+id/trade_skin"
+        android:id="@+id/user_guide"
         android:orderInCategory="100"
-        android:title="@string/trade_skin"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/explain"
-        android:orderInCategory="100"
-        android:title="@string/explain"
+        android:title="@string/user_guide"
         app:showAsAction="never" />
 </menu>

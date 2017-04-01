@@ -42,4 +42,5 @@ dependencies {
     compile files('libs/Sunflower.jar')
     compile 'com.alibaba:fastjson:1.2.8'
     compile 'org.litepal.android:core:1.5.0'
+    compile 'com.android.support:cardview-v7:23.3.0'
 }
