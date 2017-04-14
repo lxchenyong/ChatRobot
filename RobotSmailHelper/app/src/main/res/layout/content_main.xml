@@ -16,35 +16,32 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_above="@+id/bottom_ll"
-        android:layout_height="match_parent">
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:layout_above="@+id/bottom_ll">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
     </android.support.v4.widget.SwipeRefreshLayout>
-    <ImageView
-        android:id="@+id/iv_speak"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_alignParentRight="true"
-        android:src="@mipmap/ic_notifications_none_black"/>
+
     <LinearLayout
         android:id="@+id/bottom_ll"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_alignParentBottom="true"
         android:background="@color/medium_gray"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:id="@+id/text_switch"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_bg"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/ic_speaker" />
 
@@ -61,11 +58,11 @@
             android:id="@+id/bt_speak"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/speak"
+            android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
-            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="@string/speak"
             android:textSize="18sp"
             android:visibility="gone" />
 
@@ -75,8 +72,8 @@
             android:layout_height="30dp"
             android:layout_weight="0"
             android:background="@drawable/btn_select"
-            android:text="@string/send"
             android:gravity="center"
+            android:text="@string/send"
             android:textColor="@color/thin_gray"
             android:visibility="visible" />
     </LinearLayout>

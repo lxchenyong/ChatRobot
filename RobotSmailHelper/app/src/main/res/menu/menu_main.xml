@@ -2,7 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".chat.view.activity.ChatActivity">
-
+    <item
+        android:id="@+id/action_speak"
+        android:icon="@mipmap/ic_volume_up_white"
+        android:title="@string/sound"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/clear_cache"
         android:orderInCategory="100"

@@ -43,7 +43,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
     private ChatAdapter mChatAdapter;
     private EditText mEditText;
     private Button mbtSpeak;
-    private ImageView mImageView, ivSpeak;
+    private ImageView mImageView;
     private Button mbtSend;
     private ChatPresenter presenter;
     private long mExitTime = 0;
@@ -57,6 +57,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
     private boolean isSpeak = true;
     private boolean showSpeak = true;
     private int index = 0;
+    private Menu collapsedMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
             msgInfo.save();
         }
         initView();
-        if (!msgInfoList.isEmpty()){
+        if (!msgInfoList.isEmpty()) {
             mRecyclerView.smoothScrollToPosition(msgInfoList.size());
         }
         // 初始化识别对象
@@ -114,22 +115,20 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
         mEditText = (EditText) findViewById(R.id.et_content);
         mbtSend = (Button) findViewById(R.id.bt_send);
         mImageView = (ImageView) findViewById(R.id.text_switch);
-        ivSpeak = (ImageView) findViewById(R.id.iv_speak);
         mbtSpeak = (Button) findViewById(R.id.bt_speak);
 
         mbtSend.setOnClickListener(this);
         mbtSpeak.setOnClickListener(this);
         mImageView.setOnClickListener(this);
-        ivSpeak.setOnClickListener(this);
     }
 
     @Override
     public void onRefresh() {
         index++;
-        for (int i = 0; i < DataSupport.order("id desc").limit(10).offset(10*index).find(MsgInfo.class).size(); i++) {
-            msgInfoList.add(0, DataSupport.order("id desc").limit(10).offset(10*index).find(MsgInfo.class).get(i));
+        for (int i = 0; i < DataSupport.order("id desc").limit(10).offset(10 * index).find(MsgInfo.class).size(); i++) {
+            msgInfoList.add(0, DataSupport.order("id desc").limit(10).offset(10 * index).find(MsgInfo.class).get(i));
         }
-        if (DataSupport.order("id desc").limit(10).offset(10*index).find(MsgInfo.class).isEmpty()){
+        if (DataSupport.order("id desc").limit(10).offset(10 * index).find(MsgInfo.class).isEmpty()) {
             showToast("数据已全部加载完成");
         }
         swipeRefresh.setRefreshing(false);
@@ -221,14 +220,7 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
             case R.id.bt_speak:
                 presenter.initSpeech();
                 break;
-            case R.id.iv_speak:
-                if (showSpeak) {
-                    showSpeak = false;
-                    ivSpeak.setImageResource(R.mipmap.ic_notifications_off_black);
-                } else {
-                    showSpeak = true;
-                    ivSpeak.setImageResource(R.mipmap.ic_notifications_none_black);
-                }
+
         }
     }
 
@@ -245,16 +237,26 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.clear_cache) {
-            DataSupport.deleteAll(MsgInfo.class);
-            msgInfoList.clear();
-            mChatAdapter.notifyDataSetChanged();
-            return true;
-        } else if (id == R.id.user_guide) {
-            startActivity(UserGuideActivity.createExplicitIntent(this));
-            return true;
+        switch (id) {
+            case R.id.clear_cache:
+                DataSupport.deleteAll(MsgInfo.class);
+                msgInfoList.clear();
+                mChatAdapter.notifyDataSetChanged();
+                break;
+            case R.id.user_guide:
+                startActivity(UserGuideActivity.createExplicitIntent(this));
+                break;
+            case R.id.action_speak:
+                if (showSpeak) {
+                    showSpeak = false;
+                    item.setIcon(R.mipmap.ic_volume_off_white);
+                } else {
+                    showSpeak = true;
+                    item.setIcon(R.mipmap.ic_volume_up_white);
+                }
+                break;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
