@@ -32,7 +32,7 @@ public class ChatPresenter implements IChatContract.IChatPresenter {
 
     private IChatContract.IChatView mIChatView;
     private ChatBiz mChatBiz;
-    private String data ;
+    private String data;
 
     public ChatPresenter(IChatContract.IChatView mIChatView, ChatBiz mChatBiz) {
         this.mIChatView = mIChatView;
@@ -159,11 +159,12 @@ public class ChatPresenter implements IChatContract.IChatPresenter {
                             mIChatView.showToast("（系统）服务器数据格式异常");
                             mIChatView.failurePrompt("（系统）服务器数据格式异常");
                             break;
+
                     }
                     assert data != null;
-                    if (!data.isEmpty()){
+                    if (!data.isEmpty()) {
                         mIChatView.showData(data);
-                }
+                    }
 
                 }
 
