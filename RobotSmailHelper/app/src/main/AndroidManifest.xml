@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--读取联系人权限，上传联系人需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    //添加友盟权限
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:name="com.jeff.robotsmailhelper.application.MyApplication"
@@ -44,6 +46,9 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".chat.view.activity.UserGuideActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        //集成友盟申请的key
+        <meta-data android:value="599d5a765312ddb9a9001699" android:name="UMENG_APPKEY"></meta-data>
     </application>
 
 </manifest>

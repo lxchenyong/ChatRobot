@@ -27,6 +27,7 @@ import com.jeff.robotsmailhelper.chat.model.bean.MsgInfo;
 import com.jeff.robotsmailhelper.chat.model.biz.ChatBiz;
 import com.jeff.robotsmailhelper.chat.presenter.ChatPresenter;
 import com.jeff.robotsmailhelper.chat.view.adapter.ChatAdapter;
+import com.umeng.analytics.MobclickAgent;
 
 import org.litepal.crud.DataSupport;
 
@@ -84,14 +85,22 @@ public class ChatActivity extends AppCompatActivity implements IChatContract.ICh
         keyHeight = screenHeight / 3;
     }
 
+    //session的统计
     @Override
     protected void onResume() {
         super.onResume();
 
         //添加layout大小发生改变监听器
         activityRootView.addOnLayoutChangeListener(this);
+        MobclickAgent.onResume(this);
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     private void initView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         assert toolbar != null;
