@@ -1,6 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'release'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
@@ -15,17 +20,85 @@ android {
 //            abiFilters 'armeabi', 'arm64-v8a', 'armeabi-v7a', 'x86'
 //            //还可以添加
 //        }
+        manifestPlaceholders = [ UMENG_CHANNEL_VALUE:"default_channel" ]
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 不显示Log
+//            buildConfigField "boolean", "LOG_DEBUG", "false"
+//            //混淆
+//            minifyEnabled true
+//            //Zipalign优化
+//            zipAlignEnabled true
+//
+//            // 移除无用的resource文件
+//            shrinkResources true
+//            //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
+////            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名
+//            signingConfig signingConfigs.relealse
         }
+
+       /* applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                def outputFile = output.outputFile
+                if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                    // 输出apk名称为boohee_v1.0_2015-01-15_wandoujia.apk
+                    def fileName = "myApk_${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
+                    output.outputFile = new File(outputFile.parent, fileName)
+                }
+            }
+        }*/
+        android.applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                def outputFile = output.outputFile
+                if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                    File outputDirectory = new File(outputFile.parent);
+                    def fileName
+                    if (variant.buildType.name == "release") {
+//                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
+                        fileName = "qudou_${variant.productFlavors[0].name}.apk"
+                    } else {
+//                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
+                        fileName = "qudou_${variant.productFlavors[0].name}_beta.apk"
+                    }
+                    output.outputFile = new File(outputDirectory, fileName)
+                }
+            }
+        }
+    }
+    productFlavors {
+
+//        wandoujia {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+//        }
+//
+//        baidu {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+//        }
+//
+//        c360 {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "c360"]
+//        }
+        default_channel{}
+        wandoujia{}
+        _360{}
+        yingyongbao{}
+        xiaomi{}
+        baidu{}
+        huawei{}
+        jifeng{}
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [ UMENG_CHANNEL_VALUE:name ]
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -43,7 +116,6 @@ dependencies {
     compile 'com.alibaba:fastjson:1.2.8'
     compile 'org.litepal.android:core:1.5.0'
     compile 'com.android.support:cardview-v7:23.3.0'
-
     //添加友盟依赖包
     compile 'com.umeng.analytics:analytics:latest.integration'
 }
